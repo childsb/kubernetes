@@ -56,6 +56,7 @@ var _ = framework.KubeDescribe("Dynamic provisioning", func() {
 
 			By("creating a claim with a dynamic provisioning annotation")
 			class := createStorageClass()
+			c.Extensions().StorageClasses().Create(class)
 			defer c.Extensions().StorageClasses().Delete(class.Name)
 
 			By("creating a claim with a dynamic provisioning annotation")
