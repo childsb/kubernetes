@@ -1082,6 +1082,7 @@ func DefaultAPIResourceConfigSource() *genericapiserver.ResourceConfig {
 		extensionsapiv1beta1.SchemeGroupVersion.WithResource("networkpolicies"),
 		extensionsapiv1beta1.SchemeGroupVersion.WithResource("replicasets"),
 		extensionsapiv1beta1.SchemeGroupVersion.WithResource("thirdpartyresources"),
+		extensionsapiv1beta1.SchemeGroupVersion.WithResource("storageclasses"),
 	)
 
 	return ret
