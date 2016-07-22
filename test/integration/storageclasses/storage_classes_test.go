@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package secrets
+package storageclasses
 
-// This file tests use of the secrets API resource.
+// This file tests use of the storage classes API resource.
 
 import (
 	"testing"
@@ -48,9 +48,9 @@ func TestStorageClasses(t *testing.T) {
 	DoTestStorageClasses(t, client, ns)
 }
 
-// DoTestSecrets test secrets for one api version.
+// DoTestStorageClasses test storage classes for one api version.
 func DoTestStorageClasses(t *testing.T, client *client.Client, ns *api.Namespace) {
-	// Make a secret object.
+	// Make a storage class object.
 	s := extensions.StorageClass{
 		TypeMeta: unversioned.TypeMeta{
 			Kind: "StorageClass",
