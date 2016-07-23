@@ -283,15 +283,10 @@ func (s *CMServer) Run(_ []string) error {
 		}
 	}
 
-	provisioner, err := kubecontrollermanager.NewVolumeProvisioner(cloud, s.VolumeConfiguration)
-	if err != nil {
-		glog.Fatalf("A Provisioner could not be created: %v, but one was expected. Provisioning will not work. This functionality is considered an early Alpha version.", err)
-	}
-
 	volumeController := persistentvolumecontroller.NewPersistentVolumeController(
 		clientset.NewForConfigOrDie(restclient.AddUserAgent(kubeconfig, "persistent-volume-binder")),
 		s.PVClaimBinderSyncPeriod.Duration,
-		kubecontrollermanager.ProbeRecyclableVolumePlugins(s.VolumeConfiguration),
+		kubecontrollermanager.ProbeControllerVolumePlugins(cloud, s.VolumeConfiguration),
 		cloud,
 		s.ClusterName,
 		nil,
