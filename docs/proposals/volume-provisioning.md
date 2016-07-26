@@ -122,7 +122,7 @@ We propose that:
     a match is found. The claim is `Pending` during this period.
 
 4.  With StorageClass instance, the controller finds volume plugin specified by
-    StorageClass.ProvisionerType.
+    StorageClass.Provisioner.
 
 5.  All provisioners are in-tree; they implement an interface called
     `ProvisionableVolumePlugin`, which has a method called `NewProvisioner`
@@ -166,8 +166,8 @@ type StorageClass struct {
   unversioned.TypeMeta `json:",inline"`
   ObjectMeta           `json:"metadata,omitempty"`
 
-  // ProvisionerType indicates the type of the provisioner.
-  ProvisionerType string `json:"provisionerType,omitempty"`
+  // Provisioner indicates the type of the provisioner.
+  Provisioner string `json:"provisioner,omitempty"`
 
   // Parameters for dynamic volume provisioner.
   ProvisionerParameters map[string]string `json:"provisionerParameters,omitempty"`
@@ -229,7 +229,7 @@ apiVersion: v1
 kind: StorageClass
 metadata:
   name: aws-fast
-provisionerType: kubernetes.io/aws-ebs
+provisioner: kubernetes.io/aws-ebs
 provisionerParameters:
    zone: us-east-1b
    type: ssd
@@ -239,7 +239,7 @@ apiVersion: v1
 kind: StorageClass
 metadata:
   name: aws-slow
-provisionerType: kubernetes.io/aws-ebs
+provisioner: kubernetes.io/aws-ebs
 provisionerParameters:
    zone: us-east-1b
    type: spinning
