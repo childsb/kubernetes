@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 metadata:
   name: slow
 provisioner: kubernetes.io/aws-ebs
-provisionerParameters:
+parameters:
   type: io1
   zone: us-east-1d
   iopsPerGB: "10"

@@ -128,7 +128,7 @@ We propose that:
     `ProvisionableVolumePlugin`, which has a method called `NewProvisioner`
     that returns a new provisioner.
 
-6.  The controller calls volume plugin `Provision` with ProvisionerParameters from the `StorageClass` configuration object.
+6.  The controller calls volume plugin `Provision` with Parameters from the `StorageClass` configuration object.
 
 7.  If `Provision` returns an error, the controller generates an event on the
     claim and goes back to step 1., i.e. it will retry provisioning periodically
@@ -170,7 +170,7 @@ type StorageClass struct {
   Provisioner string `json:"provisioner,omitempty"`
 
   // Parameters for dynamic volume provisioner.
-  ProvisionerParameters map[string]string `json:"provisionerParameters,omitempty"`
+  Parameters map[string]string `json:"parameters,omitempty"`
 }
 
 ```
@@ -207,7 +207,7 @@ With the scheme outlined above the provisioner creates PVs using parameters spec
 ### Provisioner interface changes
 
 `struct volume.VolumeOptions` (containing parameters for a provisioner plugin)
-will be extended to contain StorageClass.ProvisionerParameters.
+will be extended to contain StorageClass.Parameters.
 
 The existing provisioner implementations will be modified to accept the StorageClass configuration object.
 
@@ -230,7 +230,7 @@ kind: StorageClass
 metadata:
   name: aws-fast
 provisioner: kubernetes.io/aws-ebs
-provisionerParameters:
+parameters:
    zone: us-east-1b
    type: ssd
 
@@ -240,7 +240,7 @@ kind: StorageClass
 metadata:
   name: aws-slow
 provisioner: kubernetes.io/aws-ebs
-provisionerParameters:
+parameters:
    zone: us-east-1b
    type: spinning
 ```

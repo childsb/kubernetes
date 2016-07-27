@@ -41,8 +41,8 @@ var storageClasses = []*extensions.StorageClass{
 			Name: "gold",
 		},
 
-		Provisioner:           mockPluginName,
-		ProvisionerParameters: class1Parameters,
+		Provisioner: mockPluginName,
+		Parameters:  class1Parameters,
 	},
 	{
 		TypeMeta: unversioned.TypeMeta{
@@ -51,27 +51,27 @@ var storageClasses = []*extensions.StorageClass{
 		ObjectMeta: api.ObjectMeta{
 			Name: "silver",
 		},
-		Provisioner:           mockPluginName,
-		ProvisionerParameters: class2Parameters,
+		Provisioner: mockPluginName,
+		Parameters:  class2Parameters,
 	},
 }
 
 // call to storageClass 1, returning an error
 var provision1Error = provisionCall{
-	ret: errors.New("Moc provisioner error"),
-	expectedProvisionerParameters: class1Parameters,
+	ret:                errors.New("Moc provisioner error"),
+	expectedParameters: class1Parameters,
 }
 
 // call to storageClass 1, returning a valid PV
 var provision1Success = provisionCall{
-	ret: nil,
-	expectedProvisionerParameters: class1Parameters,
+	ret:                nil,
+	expectedParameters: class1Parameters,
 }
 
 // call to storageClass 2, returning a valid PV
 var provision2Success = provisionCall{
-	ret: nil,
-	expectedProvisionerParameters: class2Parameters,
+	ret:                nil,
+	expectedParameters: class2Parameters,
 }
 
 // Test single call to syncVolume, expecting provisioning to happen.

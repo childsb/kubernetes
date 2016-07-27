@@ -86,9 +86,9 @@ func (util *AWSDiskUtil) CreateVolume(c *awsElasticBlockStoreProvisioner) (strin
 		Tags:       tags,
 		PVCName:    c.options.PVCName,
 	}
-	// Apply ProvisionerParameters (case-insensitive). We leave validation of
+	// Apply Parameters (case-insensitive). We leave validation of
 	// the values to the cloud provider.
-	for k, v := range c.options.ProvisionerParameters {
+	for k, v := range c.options.Parameters {
 		switch strings.ToLower(k) {
 		case "type":
 			volumeOptions.VolumeType = v

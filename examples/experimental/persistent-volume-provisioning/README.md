@@ -45,7 +45,7 @@ scripts that launch kube-controller-manager.
 
 The admin must define `StorageClass` objects that describe named "classes" of storage offered in a cluster. Different classes might map to arbitrary levels or policies determined by the admin. When configuring a `StorageClass` object for persistent volume provisioning, the admin will need to describe the type of provisioner to use and the parameters that will be used by the provisioner when it provisions a `PersistentVolume` belonging to the class.
 
-The name of a StorageClass object is significant, and is how users can request a particular class, by specifying the name in their `PersistentVolumeClaim`. The `provisioner` field must be specified as it determines what volume plugin is used for provisioning PVs. 2 cloud providers will be provided in the beta version of this feature: EBS and GCE. The `provisionerParameters` field contains the parameters that describe volumes belonging to the storage class. Different parameters may be accepted depending on the `provisioner`. For example, the value `io1`, for the parameter `type`, and the parameter `iopsPerGB` are specific to EBS . When a parameter is omitted, some default is used.
+The name of a StorageClass object is significant, and is how users can request a particular class, by specifying the name in their `PersistentVolumeClaim`. The `provisioner` field must be specified as it determines what volume plugin is used for provisioning PVs. 2 cloud providers will be provided in the beta version of this feature: EBS and GCE. The `parameters` field contains the parameters that describe volumes belonging to the storage class. Different parameters may be accepted depending on the `provisioner`. For example, the value `io1`, for the parameter `type`, and the parameter `iopsPerGB` are specific to EBS . When a parameter is omitted, some default is used.
 
 #### AWS
 
@@ -55,7 +55,7 @@ apiVersion: extensions/v1beta1
 metadata:
   name: slow
 provisioner: kubernetes.io/aws-ebs
-provisionerParameters:
+parameters:
   type: io1
   zone: us-east-1d
   iopsPerGB: "10"
@@ -73,7 +73,7 @@ apiVersion: extensions/v1beta1
 metadata:
   name: slow
 provisioner: kubernetes.io/gce-pd
-provisionerParameters:
+parameters:
   type: pd-standard
   zone: us-central1-a
 ```

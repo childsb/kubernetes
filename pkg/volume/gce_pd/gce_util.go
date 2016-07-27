@@ -80,11 +80,11 @@ func (gceutil *GCEDiskUtil) CreateVolume(c *gcePersistentDiskProvisioner) (strin
 	// GCE works with gigabytes, convert to GiB with rounding up
 	requestGB := volume.RoundUpSize(requestBytes, 1024*1024*1024)
 
-	// Apply ProvisionerParameters (case-insensitive). We leave validation of
+	// Apply Parameters (case-insensitive). We leave validation of
 	// the values to the cloud provider.
 	diskType := ""
 	zone := ""
-	for k, v := range c.options.ProvisionerParameters {
+	for k, v := range c.options.Parameters {
 		switch strings.ToLower(k) {
 		case "type":
 			diskType = v

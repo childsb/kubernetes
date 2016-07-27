@@ -1026,8 +1026,8 @@ type mockVolumePlugin struct {
 }
 
 type provisionCall struct {
-	expectedProvisionerParameters map[string]string
-	ret                           error
+	expectedParameters map[string]string
+	ret                error
 }
 
 var _ vol.VolumePlugin = &mockVolumePlugin{}
@@ -1083,8 +1083,8 @@ func (plugin *mockVolumePlugin) Provision() (*api.PersistentVolume, error) {
 
 	var pv *api.PersistentVolume
 	call := plugin.provisionCalls[plugin.provisionCallCounter]
-	if !reflect.DeepEqual(call.expectedProvisionerParameters, plugin.provisionOptions.ProvisionerParameters) {
-		glog.Errorf("invalid provisioner call, expected options: %+v, got: %+v", call.expectedProvisionerParameters, plugin.provisionOptions.ProvisionerParameters)
+	if !reflect.DeepEqual(call.expectedParameters, plugin.provisionOptions.Parameters) {
+		glog.Errorf("invalid provisioner call, expected options: %+v, got: %+v", call.expectedParameters, plugin.provisionOptions.Parameters)
 		return nil, fmt.Errorf("Mock plugin error: invalid provisioner call")
 	}
 	if call.ret == nil {

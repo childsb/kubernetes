@@ -1145,7 +1145,7 @@ func (ctrl *PersistentVolumeController) provisionClaimOperation(claimObj interfa
 		ClusterName:                   ctrl.clusterName,
 		PVName:                        pvName,
 		PVCName:                       claim.Name,
-		ProvisionerParameters:         storageClass.ProvisionerParameters,
+		Parameters:                    storageClass.Parameters,
 		ProvisionerSelector:           claim.Spec.Selector,
 	}
 

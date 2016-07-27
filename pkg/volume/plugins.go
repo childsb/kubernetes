@@ -57,7 +57,7 @@ type VolumeOptions struct {
 	// Tags to attach to the real volume in the cloud provider - e.g. AWS EBS
 	CloudTags *map[string]string
 	// Volume provisioning parameters from StorageClass
-	ProvisionerParameters map[string]string
+	Parameters map[string]string
 	// Volume selector from PersistentVolumeClaim
 	ProvisionerSelector *unversioned.LabelSelector
 }
