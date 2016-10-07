@@ -31,6 +31,18 @@ ensure-packages() {
   cd /usr/share/google
   download-or-bust "dc96f40fdc9a0815f099a51738587ef5a976f1da" https://raw.githubusercontent.com/GoogleCloudPlatform/compute-image-packages/82b75f314528b90485d5239ab5d5495cc22d775f/google-startup-scripts/usr/share/google/safe_format_and_mount
   chmod +x safe_format_and_mount
+
+  # install Gluster client packages
+  apt-get install -y -qq glusterfs-client
+
+  # Install rbd client packages
+  apt-get install -y -qq ceph-common
+  modprobe rbd
+
+  #Install ISCSI pieces
+  apt-get install -y -qq iscsitarget iscsitarget-dkms
+
+
 }
 
 set-kube-env() {
@@ -75,7 +87,13 @@ find-master-pd() {
 }
 
 fix-apt-sources() {
-  :
+  # gluster source
+  wget -O - http://download.gluster.org/pub/gluster/glusterfs/LATEST/rsa.pub | apt-key add -
+  DEBID=$(grep 'VERSION_ID=' /etc/os-release | cut -d '=' -f 2 | tr -d '"')
+  DEBVER=$(grep 'VERSION=' /etc/os-release | grep -Eo '[a-z]+')
+  echo deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/${DEBID}/apt ${DEBVER} main > /etc/apt/sources.list.d/gluster.list
+  apt-get update -y -qq
+
 }
 
 salt-master-role() {

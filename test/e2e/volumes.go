@@ -195,7 +195,7 @@ func volumeTestCleanup(f *framework.Framework, config VolumeTestConfig) {
 // Start a client pod using given VolumeSource (exported by startVolumeServer())
 // and check that the pod sees the data from the server pod.
 func testVolumeClient(client *client.Client, config VolumeTestConfig, volume api.VolumeSource, fsGroup *int64, expectedContent string) {
-	By(fmt.Sprint("starting ", config.prefix, " client"))
+	By(fmt.Sprint("starting ", config.prefix, " client using VolumeSource ", volume, "and VolumeTestConfig ", config))
 	clientPod := &api.Pod{
 		TypeMeta: unversioned.TypeMeta{
 			Kind:       "Pod",
@@ -380,7 +380,7 @@ var _ = framework.KubeDescribe("Volumes [Feature:Volumes]", func() {
 				}
 			}()
 			pod := startVolumeServer(c, config)
-			serverIP := pod.Status.PodIP
+			serverIP := pod.Status.HostIP
 			framework.Logf("NFS server IP address: %v", serverIP)
 
 			volume := api.VolumeSource{
@@ -414,7 +414,7 @@ var _ = framework.KubeDescribe("Volumes [Feature:Volumes]", func() {
 				}
 			}()
 			pod := startVolumeServer(c, config)
-			serverIP := pod.Status.PodIP
+			serverIP := pod.Status.HostIP
 			framework.Logf("Gluster server IP address: %v", serverIP)
 
 			// create Endpoints for the server
@@ -497,7 +497,7 @@ var _ = framework.KubeDescribe("Volumes [Feature:Volumes]", func() {
 				}
 			}()
 			pod := startVolumeServer(c, config)
-			serverIP := pod.Status.PodIP
+			serverIP := pod.Status.HostIP
 			framework.Logf("iSCSI server IP address: %v", serverIP)
 
 			volume := api.VolumeSource{
@@ -540,7 +540,7 @@ var _ = framework.KubeDescribe("Volumes [Feature:Volumes]", func() {
 				}
 			}()
 			pod := startVolumeServer(c, config)
-			serverIP := pod.Status.PodIP
+			serverIP := pod.Status.HostIP
 			framework.Logf("Ceph server IP address: %v", serverIP)
 
 			// create secrets for the server
@@ -608,7 +608,7 @@ var _ = framework.KubeDescribe("Volumes [Feature:Volumes]", func() {
 				}
 			}()
 			pod := startVolumeServer(c, config)
-			serverIP := pod.Status.PodIP
+			serverIP := pod.Status.HostIP
 			framework.Logf("Ceph server IP address: %v", serverIP)
 			By("sleeping a bit to give ceph server time to initialize")
 			time.Sleep(20 * time.Second)
