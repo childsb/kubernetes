@@ -18,7 +18,31 @@
 # We include the GCE script first, and this one second.
 
 ensure-basic-networking() {
-  :
+ # NFSv4 Ports
+ iptables -I INPUT 1 -p tcp --dport 2049 -j ACCEPT
+
+ # NFSv3 Ports
+ iptables -I INPUT 1 -p tcp --dport 20048 -j ACCEPT
+ iptables -I INPUT 1 -p tcp --dport 111 -j ACCEPT
+
+ # glusterfs
+iptables -I INPUT 1 -p tcp --dport 38465 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 38466 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 38467 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 38468 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 24007:24008 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 49152:49156 -j ACCEPT
+
+# CEPH
+iptables -I INPUT 1 -p tcp --dport 6800:7300 -j ACCEPT
+iptables -I INPUT 1 -p tcp --dport 6789 -j ACCEPT
+
+#ISCSI
+
+iptables -I INPUT 1 -p tcp --dport 3260 -j ACCEPT
+
+
+
 }
 
 ensure-packages() {
@@ -40,7 +64,7 @@ ensure-packages() {
   modprobe rbd
 
   #Install ISCSI pieces
-  apt-get install -y -qq iscsitarget iscsitarget-dkms
+  apt-get install -y -qq  open-iscsi
 
 
 }
