@@ -46,9 +46,9 @@ iptables -I INPUT 1 -p tcp --dport 3260 -j ACCEPT
 }
 
 ensure-packages() {
-  apt-get-install curl
+ # apt-get-install curl
   # For reading kube_env.yaml
-  apt-get-install python-yaml
+ # apt-get-install python-yaml
 
   # TODO: Where to get safe_format_and_mount?
   mkdir -p /usr/share/google
@@ -57,15 +57,15 @@ ensure-packages() {
   chmod +x safe_format_and_mount
 
   # install Gluster client packages
-  apt-get install -y -qq glusterfs-client
+ #  apt-get install -y -qq glusterfs-client
 
   # Install rbd client packages
-  apt-get install -y -qq ceph-common
+ # apt-get install -y -qq ceph-common
   modprobe rbd
 
   #Install ISCSI pieces
-  apt-get install -y -qq  open-iscsi
-
+ # apt-get install -y -qq  open-iscsi
+ :
 
 }
 
@@ -112,12 +112,12 @@ find-master-pd() {
 
 fix-apt-sources() {
   # gluster source
-  wget -O - http://download.gluster.org/pub/gluster/glusterfs/LATEST/rsa.pub | apt-key add -
-  DEBID=$(grep 'VERSION_ID=' /etc/os-release | cut -d '=' -f 2 | tr -d '"')
-  DEBVER=$(grep 'VERSION=' /etc/os-release | grep -Eo '[a-z]+')
-  echo deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/${DEBID}/apt ${DEBVER} main > /etc/apt/sources.list.d/gluster.list
-  apt-get update -y -qq
-
+#   wget -O - http://download.gluster.org/pub/gluster/glusterfs/LATEST/rsa.pub | #apt-key add -
+#  DEBID=$(grep 'VERSION_ID=' /etc/os-release | cut -d '=' -f 2 | tr -d '"')
+#  DEBVER=$(grep 'VERSION=' /etc/os-release | grep -Eo '[a-z]+')
+#  echo deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/${DEBID}/apt ${DEBVER} main > /etc/apt/sources.list.d/gluster.list
+#  apt-get update -y -qq
+ :
 }
 
 salt-master-role() {
