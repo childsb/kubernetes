@@ -117,6 +117,9 @@ apt-get-update() {
  :
 }
 
+auto-upgrade() {
+ :
+}
 
 fix-apt-sources() {
   # gluster source
