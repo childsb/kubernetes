@@ -109,6 +109,14 @@ find-master-pd() {
   # Mount the master PD as early as possible
   echo "/dev/xvdb /mnt/master-pd ext4 noatime 0 0" >> /etc/fstab
 }
+apt-get-install() {
+ :
+}
+
+apt-get-update() {
+ :
+}
+
 
 fix-apt-sources() {
   # gluster source
