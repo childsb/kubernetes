@@ -117,6 +117,9 @@ apt-get-update() {
  :
 }
 
+install-salt() {
+ :
+}
 auto-upgrade() {
  :
 }
