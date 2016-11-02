@@ -6,8 +6,7 @@ base:
 {% if grains.get('cloud') == 'aws' and grains['os_family'] != 'RedHat' %}
     - ntp
 {% elif grains.get('cloud') == 'aws' and grains['os_family'] == 'RedHat' %}
-    - ntpd
-
+    - chrony
 {% endif %}
 {% if pillar.get('e2e_storage_test_environment', '').lower() == 'true' %}
     - e2e
