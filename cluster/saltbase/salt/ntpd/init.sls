@@ -1,4 +1,4 @@
-ntp:
+ntpd:
   pkg:
     - installed
 
