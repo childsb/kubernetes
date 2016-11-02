@@ -3,8 +3,11 @@ base:
     - base
     - debian-auto-upgrades
     - salt-helpers
-{% if grains.get('cloud') == 'aws' %}
+{% if grains.get('cloud') == 'aws' and grains['os_family'] != 'RedHat' %}
     - ntp
+{% elif grains.get('cloud') == 'aws' and grains['os_family'] == 'RedHat'%}
+- ntpd
+
 {% endif %}
 {% if pillar.get('e2e_storage_test_environment', '').lower() == 'true' %}
     - e2e
