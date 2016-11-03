@@ -21,19 +21,13 @@ bridge-utils:
 {% if (grains.os == 'Fedora' and grains.osrelease_info[0] >= 22) or (grains.os == 'CentOS' and grains.osrelease_info[0] >= 7) %}
 
 
-/opt/kubernetes/helpers/docker-prestart:
-  file.managed:
-    - source: salt://docker/docker-prestart
-    - user: root
-    - group: root
-    - mode: 755
-
 fix-service-docker:
   cmd.wait:
-    - name: /opt/kubernetes/helpers/services bounce docker
+    - name: echo "bouncing docker........" ; systemctl stop docker  ; systemctl start docker
     - watch:
       - file: {{ pillar.get('systemd_system_path') }}/docker.service
       - file: {{ environment_file }}
+      - pkg: docker
 
 docker:
   pkg:
