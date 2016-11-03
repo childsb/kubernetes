@@ -7,7 +7,7 @@ e2e:
       - ceph
 {% if grains['os_family'] == 'RedHat' %}
       - glusterfs-fuse
-      - rbd-fuse
+      - ceph-common
       - iscsi-initiator-utils
       - nfs-utils
 {% else %}
