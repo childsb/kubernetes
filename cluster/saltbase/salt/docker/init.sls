@@ -31,6 +31,13 @@ docker:
       - file: {{ environment_file }}
       - pkg: docker
 
+fix-service-docker:
+  cmd.wait:
+    - name: /opt/kubernetes/helpers/services bounce docker
+    - watch:
+      - file: {{ pillar.get('systemd_system_path') }}/docker.service
+      - file: {{ environment_file }}
+
 {% else %}
 
 docker-io:
