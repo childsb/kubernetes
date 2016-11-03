@@ -119,7 +119,7 @@ else
     export LVM_SUPPRESS_FD_WARNINGS=1
 
     for block_device in ${block_devices}; do
-      pvcreate ${block_device}
+      pvcreate -f -y ${block_device}
     done
     vgcreate vg-ephemeral ${block_devices[@]}
 
