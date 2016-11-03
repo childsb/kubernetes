@@ -62,6 +62,8 @@ function load_distro_utils () {
 case "${OS_DISTRIBUTION}" in
   jessie)
     ;;
+  bradley)
+    ;;
   wily)
     ;;
   vivid)
@@ -331,6 +333,9 @@ case "${OS_DISTRIBUTION}" in
     ;;
   jessie)
     detect-jessie-image
+    ;;
+  bradley)
+    detect-bradley-image
     ;;
   *)
     echo "Please specify AWS_IMAGE directly (distro ${OS_DISTRIBUTION} not recognized)"
@@ -975,11 +980,20 @@ function create-bootstrap-script() {
   (
     # Include the default functions from the GCE configure-vm script
     sed '/^#+AWS_OVERRIDES_HERE/,$d' "${KUBE_ROOT}/cluster/gce/configure-vm.sh"
-    # Include the AWS override functions
-    cat "${KUBE_ROOT}/cluster/aws/templates/configure-vm-aws.sh"
-    cat "${KUBE_ROOT}/cluster/aws/templates/format-disks.sh"
-    # Include the GCE configure-vm directly-executed code
-    sed -e '1,/^#+AWS_OVERRIDES_HERE/d' "${KUBE_ROOT}/cluster/gce/configure-vm.sh"
+
+    if [[ "${OS_DISTRIBUTION}" == "bradley" ]]; then
+       # Include the AWS override functions
+       cat "${KUBE_ROOT}/cluster/aws/templates/configure-vm-aws.sh"
+       cat "${KUBE_ROOT}/cluster/aws/bradley/format-disks.sh"
+       # Include the GCE configure-vm directly-executed code
+       sed -e '1,/^#+AWS_OVERRIDES_HERE/d' "${KUBE_ROOT}/cluster/gce/configure-vm.sh"
+    else
+      # Include the AWS override functions
+      cat "${KUBE_ROOT}/cluster/aws/templates/configure-vm-aws.sh"
+      cat "${KUBE_ROOT}/cluster/aws/templates/format-disks.sh"
+      # Include the GCE configure-vm directly-executed code
+      sed -e '1,/^#+AWS_OVERRIDES_HERE/d' "${KUBE_ROOT}/cluster/gce/configure-vm.sh"
+    fi
   ) > "${BOOTSTRAP_SCRIPT}"
 }
 
