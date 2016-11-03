@@ -35,7 +35,7 @@ function detect-bradley-image () {
     # TODO: we could use a tag for the latest image, instead of bumping it every time
     # e.g. family = k8s-1.3-debian-jessie-amd64-hvm-ebs latest/1.3=true
     if [[ -z "${AWS_IMAGE_NAME:-}" ]]; then
-      AWS_IMAGE_NAME="kube storage e2e CentOS 7 (x86_64) - with Updates HVM v17"
+      AWS_IMAGE_NAME="k8s-1.5-centos-bradley-amd64-hvm-ebs-2016-11-2v1"
     fi
     AWS_IMAGE=`aws ec2 describe-images --owner ${aws_account} --filters Name=name,Values=${AWS_IMAGE_NAME} --query Images[].ImageId --output text`
     if [[ -z "${AWS_IMAGE-}" ]]; then
