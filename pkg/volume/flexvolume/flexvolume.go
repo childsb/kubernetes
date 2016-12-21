@@ -37,6 +37,7 @@ import (
 // This is the primary entrypoint for volume plugins.
 func ProbeVolumePlugins(pluginDir string) []volume.VolumePlugin {
 	plugins := []volume.VolumePlugin{}
+	glog.V(2).Infof("Reading flex plugins from %v", pluginDir)
 
 	files, _ := ioutil.ReadDir(pluginDir)
 	for _, f := range files {
@@ -46,8 +47,12 @@ func ProbeVolumePlugins(pluginDir string) []volume.VolumePlugin {
 		// e.g. dirname = vendor~cifs
 		// then, executable will be pluginDir/dirname/cifs
 		if f.IsDir() {
+
 			execPath := path.Join(pluginDir, f.Name())
 			plugins = append(plugins, &flexVolumePlugin{driverName: utilstrings.UnescapePluginName(f.Name()), execPath: execPath})
+			glog.V(2).Infof("Adding flex volume plugin with execPath %s", execPath)
+		}else{
+			glog.V(2).Infof("Something fishy in the flex volume plugin %v.  found a file instead of a directory", f.Name())
 		}
 	}
 	return plugins
